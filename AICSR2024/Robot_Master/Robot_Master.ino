@@ -20,12 +20,12 @@ void setup() {
   esp_now_init();
   esp_now_register_send_cb(OnDataSent);
   ScanForSlave();
-
   esp_now_add_peer(&slave);
+
   pinMode(button1, INPUT);
   pinMode(button2, INPUT);
   pinMode(button3, INPUT);
-  pinMode(button4, INPUT_PULLDOWN);
+  pinMode(button4, INPUT);
   Serial.begin(115200);
 }
 
@@ -33,8 +33,6 @@ void loop() {
   // put your main code here, to run repeatedly:
   V = digitalRead(button1) - digitalRead(button2);
   A = digitalRead(button4) - digitalRead(button3);
-  // Serial.print(V);
-  // Serial.println(A);
   if ((V != prevV)|(A != prevA)){
     uint8_t dataToSend[2] = { V, A};
     esp_now_send(slave.peer_addr, dataToSend, sizeof(dataToSend));
@@ -51,7 +49,7 @@ void ScanForSlave() {
     String SSID = WiFi.SSID(i);
     String BSSIDstr = WiFi.BSSIDstr(i);
 
-    if (SSID.indexOf("123") == 0) {
+    if (SSID.indexOf("ชื่อทีม") == 0) {
 
       int mac[6];
       if (6 == sscanf(BSSIDstr.c_str(), "%x:%x:%x:%x:%x:%x", &mac[0], &mac[1], &mac[2], &mac[3], &mac[4], &mac[5])) {

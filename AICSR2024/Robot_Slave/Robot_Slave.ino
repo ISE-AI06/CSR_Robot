@@ -13,7 +13,7 @@ const int Motor2B = 14;
 void setup() {
   Serial.begin(115200);
   WiFi.mode(WIFI_AP);
-  WiFi.softAP("123", "RX_1_Password", CHANNEL, 0);
+  WiFi.softAP("ชื่อทีม", "RX_1_Password", CHANNEL, 0);
   esp_now_init();
   esp_now_register_recv_cb(OnDataRecv);
 
