@@ -39,8 +39,8 @@ void OnDataRecv(const esp_now_recv_info *info, const uint8_t *data, int data_len
     Serial.print(" | cmd_angular_z: ");
     Serial.println(cmd_angular_z);
 
-    Motor1(min(200 * cmd_vel_x + 100 * cmd_angular_z,255));
-    Motor2(min(200 * cmd_vel_x - 100 * cmd_angular_z,255));
+    Motor1(max(min(200 * cmd_vel_x - 100 * cmd_angular_z,255)),255);
+    Motor2(max(min(200 * cmd_vel_x + 100 * cmd_angular_z,255)),255);
   } else {
     Serial.println("Received data length is insufficient.");
   }
