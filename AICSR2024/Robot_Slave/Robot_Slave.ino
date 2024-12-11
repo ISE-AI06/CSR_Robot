@@ -64,10 +64,10 @@ void Motor1(int speed) {
 
 void Motor2(int speed) {
   if ((speed > 255)|(speed < -255)){
-    analogWrite(pwm1, 255);
+    analogWrite(pwm2, 255);
   }
   else{
-  analogWrite(pwm1, abs(speed));
+  analogWrite(pwm2, abs(speed));
   }
   if (speed > 0) {
     digitalWrite(Motor2A, LOW);
