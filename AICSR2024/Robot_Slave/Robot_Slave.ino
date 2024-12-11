@@ -39,15 +39,20 @@ void OnDataRecv(const esp_now_recv_info *info, const uint8_t *data, int data_len
     Serial.print(" | cmd_angular_z: ");
     Serial.println(cmd_angular_z);
 
-    Motor1(max(min(200 * cmd_vel_x - 100 * cmd_angular_z,255)),255);
-    Motor2(max(min(200 * cmd_vel_x + 100 * cmd_angular_z,255)),255);
+    Motor1(200 * cmd_vel_x - 100 * cmd_angular_z);
+    Motor2(200 * cmd_vel_x + 100 * cmd_angular_z);
   } else {
     Serial.println("Received data length is insufficient.");
   }
 }
 
 void Motor1(int speed) {
+  if ((speed > 255)|(speed < -255)){
+    analogWrite(pwm1, 255);
+  }
+  else{
   analogWrite(pwm1, abs(speed));
+  }
   if (speed > 0) {
     digitalWrite(Motor1A, LOW);
     digitalWrite(Motor1B, HIGH);
@@ -58,7 +63,12 @@ void Motor1(int speed) {
 }
 
 void Motor2(int speed) {
-  analogWrite(pwm2, abs(speed));
+  if ((speed > 255)|(speed < -255)){
+    analogWrite(pwm1, 255);
+  }
+  else{
+  analogWrite(pwm1, abs(speed));
+  }
   if (speed > 0) {
     digitalWrite(Motor2A, LOW);
     digitalWrite(Motor2B, HIGH);
